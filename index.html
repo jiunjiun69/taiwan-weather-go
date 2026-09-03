@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-Hant-TW" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#2f80ed" />
+    <meta
+      name="description"
+      content="快速比較高雄、嘉義與台灣各地天氣，掌握逐時降雨、帶傘建議與颱風動態。"
+    />
+    <link rel="icon" type="image/svg+xml" href="%BASE_URL%favicon.svg" />
+    <title>天氣行動站｜出門前先看這一眼</title>
+    <script>
+      (() => {
+        try {
+          const saved = localStorage.getItem("weather-theme");
+          const preference = ["light", "dark", "system"].includes(saved) ? saved : "system";
+          const resolved = preference === "system"
+            ? (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+            : preference;
+          document.documentElement.dataset.theme = resolved;
+        } catch {
+          document.documentElement.dataset.theme = "light";
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

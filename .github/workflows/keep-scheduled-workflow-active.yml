@@ -1,0 +1,25 @@
+name: Keep scheduled weather updates active
+
+on:
+  schedule:
+    - cron: "19 3 1 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  keepalive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Record monthly activity
+        run: |
+          date -u +"%Y-%m-%dT%H:%M:%SZ" > .github/keepalive
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/keepalive
+          git commit -m "chore: keep weather refresh active" || exit 0
+          git push
